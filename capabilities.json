@@ -1,0 +1,80 @@
+{
+  "dataRoles": [
+    {
+      "displayName": "Elevation",
+      "name": "elevation",
+      "kind": "Grouping"
+    },
+    {
+      "displayName": "Field each degree",
+      "name": "field",
+      "kind": "Measure"
+    }
+  ],
+  "objects": {
+    "dataPoint": {
+      "displayName": "Data Point Settings",
+      "properties": {
+        "defaultColor": {
+          "displayName": "Chart Color",
+          "type": {
+            "fill": {
+              "solid": {
+                "color": true
+              }
+            }
+          }
+        },
+        "fontSize": {
+          "displayName": "Point Size",
+          "type": {
+            "numeric": true
+          }
+        }
+      }
+    },
+    "transitionSetting": {
+      "displayName": "Transition Setting",
+      "properties": {
+        "speedTransition": {
+          "type": {
+            "formatting": {
+              "fontSize": true
+            }
+          }
+        }
+      }
+    }
+  },
+  "dataViewMappings": [
+    {
+      "categorical": {
+        "categories": {
+          "for": {
+            "in": "elevation"
+          },
+          "dataReductionAlgorithm": {
+            "window": {
+              "count": 30000
+            }
+          }
+        },
+        "values": {
+          "select": [
+            {
+              "for": {
+                "in": "field"
+              },
+              "dataReductionAlgorithm": {
+                "window": {
+                  "count": 30000
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "privileges": []
+}

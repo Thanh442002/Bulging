@@ -1,0 +1,17 @@
+{
+    "version": "1.1.0",
+    "author": {"name":"thanh","email":"thanh442002@gmail.com"},
+    "resources": [
+        {
+            "resourceId": "rId0",
+            "sourceType": 5,
+            "file": "resources/Bulging.pbiviz.json"
+        }
+    ],
+    "visual": {"name":"Bulging","displayName":"Bulging","guid":"Bulging","visualClassName":"Visual","version":"1.1.0","description":"just Test","supportUrl":"https://akselos.com","gitHubUrl":""},
+    "metadata": {
+        "pbivizjson": {
+            "resourceId": "rId0"
+        }
+    }  
+}

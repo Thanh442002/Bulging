@@ -1,0 +1,23 @@
+p {
+    font-size: 20px;
+    font-weight: bold;
+    em {
+        background: yellow;
+        padding: 5px;
+        
+    }
+}
+#tooltip {
+    position: absolute; /* Bắt buộc để định vị chính xác */
+    text-align: center; /* Căn giữa nội dung */
+    padding: 8px; /* Khoảng cách nội dung */
+    font-size: 12px; /* Kích thước chữ nhỏ */
+    font-family: Arial, sans-serif; /* Phông chữ */
+    color: white; /* Màu chữ */
+    background: rgba(0, 0, 0, 0.7); /* Màu nền (đen mờ) */
+    border: 1px solid #ccc; /* Viền nhạt */
+    border-radius: 4px; /* Bo tròn góc */
+    pointer-events: none; /* Không can thiệp khi rê chuột */
+    opacity: 0; /* Mặc định ẩn */
+    transition: opacity 0.2s; /* Hiệu ứng mượt khi hiển thị */
+}

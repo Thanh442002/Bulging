@@ -1,0 +1,25 @@
+{
+    "visual": {
+        "name": "Bulging",
+        "displayName": "Bulging",
+        "guid": "Bulging",
+        "visualClassName": "Visual",
+        "version": "1.1.0",
+        "description": "just Test",
+        "supportUrl": "https://akselos.com",
+        "gitHubUrl": ""
+    },
+    "apiVersion": "5.1.0",
+    "author": {
+        "name": "thanh",
+        "email": "thanh442002@gmail.com"
+    },
+    "assets": {
+        "icon": "assets/icon.png"
+    },
+    "externalJS": null,
+    "style": "style/visual.less",
+    "capabilities": "capabilities.json",
+    "dependencies": null,
+    "stringResources": []
+}

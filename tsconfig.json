@@ -1,0 +1,23 @@
+{
+    "compilerOptions": {
+        "allowJs": false,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "ES2017",
+        "sourceMap": true,
+        "outDir": "./.tmp/build/",
+        "moduleResolution": "node",
+        "declaration": true,
+        "lib": [
+            "es2017",
+            "dom"
+        ], "typeRoots": [
+            "./node_modules/@types",
+            "./node_modules/powerbi-visuals-utils-dataviewutils"
+        ]
+    },
+    
+    "files": [
+        "./src/visual.ts"
+    ]
+}
