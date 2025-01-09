@@ -128,25 +128,43 @@ class Visual {
         }
         const dataView = options.dataViews[0];
         const categorical = dataView.categorical;
+        var initialRadius = 189;
         if (!categorical || !categorical.categories || !categorical.values) {
             return;
         }
         const categories = categorical.categories[0].values;
         const values = categorical.values[0].values;
         var data = [];
+        var design = [];
+        var concern = [];
+        var danger = [];
+        var failure = [];
         for (let index = 0; index < values.length; index++) {
             const element = String(values[index]).split(' ').map(Number);
             for (let j = 360; j > 0; j--) {
                 let fake_obj = {
                     degree: j,
                     elevation: index,
-                    displacement: element[-(j - 360)],
+                    displacement: ((element[-(j - 360)] - initialRadius) / initialRadius) * 100 / 0.03,
+                    // displacement: element[-(j - 360)],
                 };
+                if (fake_obj.displacement < 40) {
+                    design.push(fake_obj);
+                }
+                else if (fake_obj.displacement < 60) {
+                    concern.push(fake_obj);
+                }
+                else if (fake_obj.displacement < 80) {
+                    danger.push(fake_obj);
+                }
+                else {
+                    failure.push(fake_obj);
+                }
                 data.push(fake_obj);
             }
         }
         data = data.sort((a, b) => b.elevation - a.elevation);
-        console.log(data);
+        console.log("Data input", data);
         this.data = data;
         this.renderBulgingField(data, options.viewport);
     }
@@ -194,9 +212,10 @@ class Visual {
             d3__WEBPACK_IMPORTED_MODULE_1__/* .quantile */ .YVn(data.map(d => d.displacement).sort(d3__WEBPACK_IMPORTED_MODULE_1__/* .ascending */ .V_A), 0.67),
             d3__WEBPACK_IMPORTED_MODULE_1__/* .max */ .T9B(data, d => d.displacement),
         ];
+        field_list = [d3__WEBPACK_IMPORTED_MODULE_1__/* .min */ .jkA(data, d => d.displacement), 40, 60, 80];
         var colorScale = d3__WEBPACK_IMPORTED_MODULE_1__/* .scaleLinear */ .m4Y()
             .domain(field_list)
-            .range(["blue", "cyan", "yellow", "red"]);
+            .range(["green", "cyan", "yellow", "red"]);
         // Clear canvas
         context.clearRect(0, 0, canvas.width, canvas.height);
         // Draw points
@@ -268,7 +287,7 @@ class Visual {
             .attr("text-anchor", "middle")
             .style("font-size", "16px")
             .style("font-weight", "bold")
-            .text("Displacement Distribution");
+            .text("Radius Map");
         // Tooltip
         var tooltip = d3__WEBPACK_IMPORTED_MODULE_1__/* .select */ .Ltv(this.target)
             .append("div")
