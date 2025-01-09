@@ -43,6 +43,7 @@ export class Visual implements IVisual {
         }
         const dataView = options.dataViews[0];
         const categorical = dataView.categorical;
+        var initialRadius = 189
 
         if (!categorical || !categorical.categories || !categorical.values) {
             return;
@@ -50,21 +51,37 @@ export class Visual implements IVisual {
         const categories = categorical.categories[0].values;
         const values = categorical.values[0].values;
         var data = []
+        var design = []
+        var concern = []
+        var danger = []
+        var failure = []
         for (let index = 0; index < values.length; index++) {
             const element = String(values[index]).split(' ').map(Number);
             for (let j = 360; j > 0; j--) {
                 let fake_obj = {
                     degree: j,
                     elevation: index,
-                    displacement: element[-(j - 360)],
+                    displacement: ((element[-(j - 360)] - initialRadius) / initialRadius)*100 / 0.03,
+                    // displacement: element[-(j - 360)],
+                }
+                if (fake_obj.displacement < 40) {
+                    design.push(fake_obj)
+                }
+                else if (fake_obj.displacement < 60) {
+                    concern.push(fake_obj)
+                }
+                else if (fake_obj.displacement < 80) {
+                    danger.push(fake_obj)
+                }
+                else {
+                    failure.push(fake_obj)
                 }
                 data.push(fake_obj)
             }
         }
         data = data.sort((a, b) => b.elevation - a.elevation);
-        console.log(data)
+        console.log("Data input", data)
         this.data = data
-
 
         this.renderBulgingField(data, options.viewport)
     }
@@ -97,7 +114,7 @@ export class Visual implements IVisual {
             .style("position", "absolute")
             .style("left", margin.left + "px")
             .style("top", margin.top + "px")
-            .style("cursor","crosshair")
+            .style("cursor", "crosshair")
             .node() as HTMLCanvasElement;
 
         var context = canvas.getContext("2d");
@@ -122,11 +139,12 @@ export class Visual implements IVisual {
             d3.quantile(data.map(d => d.displacement).sort(d3.ascending), 0.67),
             d3.max(data, d => d.displacement),
         ];
-
+        
+        // field_list = [d3.min(data, d => d.displacement),40,60,80]
         var colorScale = d3
             .scaleLinear<string>()
             .domain(field_list)
-            .range(["blue", "cyan", "yellow", "red"]);
+            .range(["blue","cyan", "yellow", "red"]);
 
         // Clear canvas
         context.clearRect(0, 0, canvas.width, canvas.height);
@@ -153,9 +171,7 @@ export class Visual implements IVisual {
                         const directions: { [key: number]: string } = { 0: "W", 90: "N", 180: "E", 270: "S", 360: "W" };
                         return directions[d as number] || d.toString();
                     })
-
             );
-
         // Y axis
         svg
             .append("g")
@@ -217,7 +233,7 @@ export class Visual implements IVisual {
             .attr("text-anchor", "middle")
             .style("font-size", "16px")
             .style("font-weight", "bold")
-            .text("Displacement Distribution");
+            .text("Radius Map");
 
 
         // Tooltip
